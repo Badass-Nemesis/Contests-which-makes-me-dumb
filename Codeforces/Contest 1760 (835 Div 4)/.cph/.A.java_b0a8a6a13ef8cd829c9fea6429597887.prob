@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\Codes + Assignments\\Codeforces\\Pinely Round 1 (Contest 1761)\\A.java","tests":[{"id":1668956231784,"input":"4\n1 1 1\n2 1 2\n3 1 1\n4 1 1\n","output":"Yes\nNo\nNo\nYes\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Codes + Assignments\\Codeforces\\Pinely Round 1 (Contest 1761)\\A.java","group":"local","local":true}
