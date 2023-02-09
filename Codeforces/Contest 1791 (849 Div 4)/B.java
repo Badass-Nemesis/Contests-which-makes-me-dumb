@@ -4,7 +4,29 @@ import java.util.*;
 public class B {
 
     public static void solve() throws IOException {
+        int n = in.nextInt();
+        String s = in.next();
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'U') {
+                y++;
+            } else if (s.charAt(i) == 'D') {
+                y--;
+            } else if (s.charAt(i) == 'R') {
+                x++;
+            } else if (s.charAt(i) == 'L') {
+                x--;
+            }
 
+            if (x == 1 && y == 1) {
+                System.out.println("YES");
+                return;
+            }
+        }
+
+        System.out.println("NO");
+        return;
     }
 
     public static void main(String[] args) throws IOException {

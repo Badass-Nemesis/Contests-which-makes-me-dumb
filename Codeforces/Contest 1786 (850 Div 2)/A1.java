@@ -1,35 +1,54 @@
 import java.io.*;
 import java.util.*;
 
-public class C {
+public class A1 {
 
     public static void solve() throws IOException {
-        int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
+        long n = in.nextLong();
+        long alice = 0;
+        long bob = 0;
+        // 1 2 3 4 10/2 ---- 5 6 7 8 26/2 ..... 9 10 11 12
+        long index = 1;
+
+        while (n > 0) {
+            if (n - index > 0) {
+                alice += index;
+                n -= index;
+                index++;
             } else {
-                flag = true;
-                break;
+                alice += n;
+                n = 0;
+            }
+
+            if (n - index > 0) {
+                bob += index;
+                n -= index;
+                index++;
+            } else {
+                bob += n;
+                n = 0;
+            }
+
+            if (n - index > 0) {
+                bob += index;
+                n -= index;
+                index++;
+            } else {
+                bob += n;
+                n = 0;
+            }
+
+            if (n - index > 0) {
+                alice += index;
+                n -= index;
+                index++;
+            } else {
+                alice += n;
+                n = 0;
             }
         }
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
-        }
-        return;
+        System.out.println(alice + " " + bob);
     }
 
     public static void main(String[] args) throws IOException {

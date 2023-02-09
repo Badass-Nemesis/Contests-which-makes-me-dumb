@@ -2,9 +2,15 @@ import java.io.*;
 import java.util.*;
 
 public class A {
+    static String cf = "codeforces";
 
     public static void solve() throws IOException {
-
+        String s = in.next();
+        if (cf.contains(s) == true) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
     }
 
     public static void main(String[] args) throws IOException {

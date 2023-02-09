@@ -1,35 +1,22 @@
 import java.io.*;
 import java.util.*;
 
-public class C {
+public class G1 {
+    public static int recursion(int n, long[] arr, long coins, long count){
+
+        
+        return 0;
+    }
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
-            } else {
-                flag = true;
-                break;
-            }
+        long coins = in.nextLong();
+        long[] arr = new long[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextLong();
         }
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
-        }
-        return;
+
     }
 
     public static void main(String[] args) throws IOException {

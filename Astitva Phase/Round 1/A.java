@@ -1,46 +1,102 @@
 import java.io.*;
 import java.util.*;
 
-public class C {
+public class A {
+    public static int closestNumber(long[] nums, long target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int closestIndex = -1;
+        long closestDiff = Long.MAX_VALUE;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            long diff = Math.abs(nums[mid] - target);
+            if (diff < closestDiff) {
+                closestDiff = diff;
+                closestIndex = mid;
+            }
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return closestIndex;
+    }
+
+    public static int upper_bound(long arr[], long key) {
+        int index = Arrays.binarySearch(arr, key);
+        int n = arr.length;
+
+        if (index < 0) {
+            int upperBound = Math.abs(index) - 1;
+            if (upperBound < n) {
+                // System.out.print("The upper bound of " + key + " is " + arr[upperBound] + "
+                // at index " + upperBound);
+                return upperBound;
+            } else {
+                // System.out.print("The upper bound of " + key + " does not exists.");
+                return 0;
+            }
+        } else {
+            while (index < n) {
+                if (arr[index] == key)
+                    index++;
+                else {
+                    // System.out.print("The upper bound of " + key + " is " + arr[index] + " at
+                    // index " + index);
+                    return index;
+                }
+            }
+            // System.out.print("The upper bound of " + key + " does not exist.");
+            return 0;
+        }
+    }
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
-            } else {
-                flag = true;
-                break;
-            }
+        long[] lassi = new long[n];
+        for (int i = 0; i < n; i++) {
+            lassi[i] = in.nextLong();
         }
+        Arrays.sort(lassi);
+        int q = in.nextInt();
+        long[] spend = new long[q];
+        // System.out.println("here " + q); // debug
+        for (int i = 0; i < q; i++) {
+            spend[i] = in.nextLong();
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
+            // if (spend[i] < lassi[0]) {
+            // System.out.println(0);
+            // } else if (spend[i] >= lassi[n - 1]) {
+            // System.out.println(n);
+            // } else {
+            // int index = closestNumber(lassi, spend[i]);
+            // if (index < n - 1 && lassi[index] - spend[i] == lassi[index + 1] - spend[i])
+            // {
+            // index++;
+            // }
+            // System.out.println(index + 1);
+            // }
+            if (spend[i] < lassi[0]) {
                 System.out.println(0);
+            } else if (spend[i] >= lassi[n - 1]) {
+                System.out.println(n);
             } else {
-                System.out.println(1);
+                int index = upper_bound(lassi, spend[i]);
+                System.out.println(index);
             }
         }
-        return;
     }
 
     public static void main(String[] args) throws IOException {
         in = new Reader();
         out = new PrintWriter(new OutputStreamWriter(System.out));
 
-        int t = in.nextInt();
+        // int t = in.nextInt();
         // solve(t);
-        for (int i = 0; i < t; i++) {
-            solve();
-        }
+        // for (int i = 0; i < t; i++) {
+        solve();
+        // }
 
         out.flush();
         in.close();

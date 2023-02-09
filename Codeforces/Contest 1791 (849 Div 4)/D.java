@@ -4,7 +4,37 @@ import java.util.*;
 public class D {
 
     public static void solve() throws IOException {
+        int n = in.nextInt();
+        String s = in.next();
 
+        HashMap<Character, Integer> hm1 = new HashMap<>();
+        HashMap<Character, Integer> hm2 = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (hm1.containsKey(ch) == true) {
+                hm1.put(ch, hm1.get(ch) + 1);
+            } else {
+                hm1.put(ch, 1);
+            }
+        }
+
+        long max = 2;
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (hm2.containsKey(ch) == true) {
+                hm2.put(ch, hm2.get(ch) + 1);
+            } else {
+                hm2.put(ch, 1);
+            }
+            hm1.put(ch, hm1.get(ch) - 1);
+            if (hm1.get(ch) == 0) {
+                hm1.remove(ch);
+            }
+
+            max = Math.max(hm1.size() + hm2.size(), max);
+        }
+
+        System.out.println(max);
     }
 
     public static void main(String[] args) throws IOException {

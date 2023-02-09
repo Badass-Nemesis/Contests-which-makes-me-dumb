@@ -2,45 +2,63 @@ import java.io.*;
 import java.util.*;
 
 public class C {
+    static int[][] dp;
+
+    public static int recursion(int left, int right, int[] arr) {
+        if (left > right) {
+            return 0;
+        }
+
+        if (dp[left][right] != -1) {
+            return dp[left][right];
+        }
+
+        int ans1 = arr[left] + Math.min(recursion(left + 2, right, arr), recursion(left + 1, right - 1, arr));
+        int ans2 = arr[right] + Math.min(recursion(left + 1, right - 1, arr), recursion(left, right - 2, arr));
+
+        dp[left][right] = Math.max(ans1, ans2);
+
+        return dp[left][right];
+    }
 
     public static void solve() throws IOException {
-        int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
-            } else {
-                flag = true;
-                break;
-            }
+        dp = new int[501][501];
+        for (int i = 0; i < 501; i++) {
+            Arrays.fill(dp[i], -1);
         }
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
+        int n = in.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextInt();
         }
-        return;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += arr[i];
+        }
+
+        if (sum == 0) {
+            System.out.println("true");
+        }
+
+        int player1 = recursion(0, n - 1, arr);
+
+        if (player1 >= (sum - player1)) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
     }
 
     public static void main(String[] args) throws IOException {
         in = new Reader();
         out = new PrintWriter(new OutputStreamWriter(System.out));
 
-        int t = in.nextInt();
+        // int t = in.nextInt();
         // solve(t);
-        for (int i = 0; i < t; i++) {
-            solve();
-        }
+        // for (int i = 0; i < t; i++) {
+        solve();
+        // }
 
         out.flush();
         in.close();

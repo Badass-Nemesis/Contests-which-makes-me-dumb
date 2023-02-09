@@ -5,31 +5,29 @@ public class C {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextInt();
+        }
+
+        Arrays.sort(arr);
+
+        long count = 0;
+        if (arr[0] != 1) {
+            count += arr[0] - 1;
+            arr[0] = 1;
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] + 1 == arr[i + 1] || arr[i] == arr[i + 1]) {
+                // do nothing
             } else {
-                flag = true;
-                break;
+                count += arr[i + 1] - arr[i] - 1;
+                arr[i + 1] = arr[i] + 1;
             }
         }
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
-        }
-        return;
+        System.out.println(count);
     }
 
     public static void main(String[] args) throws IOException {

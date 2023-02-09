@@ -1,35 +1,45 @@
 import java.io.*;
 import java.util.*;
 
-public class C {
+public class E {
+    public static long recursion(long[] arr, long health, int index, int green, int blue) {
+        while (index < arr.length && arr[index] < health) {
+            health += arr[index] / 2;
+            index++;
+        }
+
+        if (index == arr.length) {
+            return arr.length;
+        }
+
+        if (green == 0 && blue == 0) {
+            return index;
+        }
+
+        long ans1 = 0;
+        if (green > 0) {
+            ans1 = recursion(arr, 2 * health, index, green - 1, blue);
+        }
+
+        long ans2 = 0;
+        if (blue > 0) {
+            ans2 = recursion(arr, 3 * health, index, green, blue - 1);
+        }
+
+        return Math.max(ans1, ans2);
+    }
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
-            } else {
-                flag = true;
-                break;
-            }
+        int health = in.nextInt();
+        long[] arr = new long[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextLong();
         }
+        Arrays.sort(arr);
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
-        }
-        return;
+        long ans = recursion(arr, health, 0, 2, 1);
+        System.out.println(ans);
     }
 
     public static void main(String[] args) throws IOException {

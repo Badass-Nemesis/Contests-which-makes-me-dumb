@@ -1,35 +1,32 @@
 import java.io.*;
 import java.util.*;
 
-public class C {
+public class B {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
-            } else {
-                flag = true;
-                break;
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = in.nextInt();
+        }
+
+        int count = 0;
+        for (int i = 0; i < n - 1; i++) {
+            int gcdWala = gcd(nums[i], nums[i + 1]);
+            if (gcdWala != nums[i]) {
+                count++;
             }
         }
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
+        if (n >= 3 && gcd(nums[n - 2], nums[n - 1]) != nums[n - 1]) {
+            count++;
         }
-        return;
+
+        if (count <= 1) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,35 +1,105 @@
 import java.io.*;
 import java.util.*;
 
-public class C {
+public class A2 {
 
     public static void solve() throws IOException {
-        int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
+        long n = in.nextLong();
+        long alice = 0;
+        long bob = 0;
+        // 1 2 3 4 10/2 ---- 5 6 7 8 26/2 ..... 9 10 11 12
+        long index = 1;
+        long whiteAlice = 0;
+        long blackAlice = 0;
+        long whiteBob = 0;
+        long blackBob = 0;
+        long count = 1;
+
+        while (n > 0) {
+            if (n - index > 0) {
+                alice += index;
+                n -= index;
+                index++;
+                whiteAlice += count;
+                blackAlice += count - 1;
             } else {
-                flag = true;
-                break;
+                alice += n;
+                if (n % 2 == 0) {
+                    whiteAlice += n / 2;
+                    blackAlice += n / 2;
+                } else {
+                    whiteAlice += 1 + n / 2;
+                    if (n / 2 > 0) {
+                        blackAlice += n / 2;
+                    }
+                }
+                n = 0;
             }
+
+            if (n - index > 0) {
+                bob += index;
+                n -= index;
+                index++;
+                whiteBob += count;
+                blackBob += count;
+            } else {
+                bob += n;
+                if (n % 2 == 0) {
+                    whiteBob += n / 2;
+                    blackBob += n / 2;
+                } else {
+                    blackBob += 1 + n / 2;
+                    if (n / 2 > 0) {
+                        whiteBob += n / 2;
+                    }
+                }
+                n = 0;
+            }
+
+            if (n - index > 0) {
+                bob += index;
+                n -= index;
+                index++;
+                whiteBob += count;
+                blackBob += count + 1;
+            } else {
+                bob += n;
+                if (n % 2 == 0) {
+                    whiteBob += n / 2;
+                    blackBob += n / 2;
+                } else {
+                    blackBob += 1 + n / 2;
+                    if (n / 2 > 0) {
+                        whiteBob += n / 2;
+                    }
+                }
+                n = 0;
+            }
+
+            if (n - index > 0) {
+                alice += index;
+                n -= index;
+                index++;
+                whiteAlice += count + 1;
+                blackAlice += count + 1;
+            } else {
+                alice += n;
+                if (n % 2 == 0) {
+                    whiteAlice += n / 2;
+                    blackAlice += n / 2;
+                } else {
+                    whiteAlice += 1 + n / 2;
+                    if (n / 2 > 0) {
+                        blackAlice += n / 2;
+                    }
+                }
+                n = 0;
+            }
+
+            count += 2;
         }
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
-        }
-        return;
+        System.out.println(whiteAlice + " " + blackAlice + " " + whiteBob + " " + blackBob);
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,35 +1,27 @@
 import java.io.*;
 import java.util.*;
 
-public class C {
+public class E {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        int leftP = 0;
-        int rightP = n - 1;
-        boolean flag = false;
-        while (leftP < rightP) {
-            if ((s.charAt(leftP) == '0' && s.charAt(rightP) == '1')
-                    || (s.charAt(leftP) == '1' && s.charAt(rightP) == '0')) {
-                leftP++;
-                rightP--;
-            } else {
-                flag = true;
-                break;
+        long[] arr = new long[n];
+        long countNegative = 0;
+        long sum = 0;
+        long min = Long.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextLong();
+            if (arr[i] < 0) {
+                countNegative++;
             }
+            sum += Math.abs(arr[i]);
+            min = Math.min(min, Math.abs(arr[i]));
         }
 
-        if (flag = true) {
-            System.out.println(n - 2 * (leftP));
-        } else {
-            if (n % 2 == 0) {
-                System.out.println(0);
-            } else {
-                System.out.println(1);
-            }
+        if (countNegative % 2 != 0) {
+            sum -= 2 * min;
         }
-        return;
+        System.out.println(sum);
     }
 
     public static void main(String[] args) throws IOException {
