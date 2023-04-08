@@ -1,39 +1,36 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+class Max_Count_of_1 {
+
+    public static int countOnes(StringBuilder s) {
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '0') {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        String str = in.next();
+        StringBuilder s = new StringBuilder(str);
+        int ans = 0;
+        for (int x = 0; x <= 1; x++) {
+            StringBuilder cur = new StringBuilder("");
+            cur.append(x);
+            for (int i = 1; i < n; i++) {
+                int xi = cur.charAt(i - 1) - '0';
+                int si = s.charAt(i - 1) - '0';
+                int next = xi ^ si;
+                cur.append(next);
             }
+            int cnt = countOnes(cur);
+            ans = Math.max(ans, cnt);
         }
-
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        out.println(ans);
     }
 
     public static void main(String[] args) throws IOException {

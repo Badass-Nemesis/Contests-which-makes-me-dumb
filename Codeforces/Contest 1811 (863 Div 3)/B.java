@@ -4,36 +4,31 @@ import java.util.*;
 public class B {
 
     public static void solve() throws IOException {
-        int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
-            }
-        }
+        long n = in.nextLong();
+        long x1 = in.nextLong();
+        long y1 = in.nextLong();
+        long x2 = in.nextLong();
+        long y2 = in.nextLong();
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
+        long max1 = Math.max(x1, y1);
+        long max2 = Math.max(x2, y2);
+
+        long temp = Math.abs(max1 - max2);
+
+        if (max1 == n || max2 == n) {
+            long min1 = Math.min(x1, y1);
+            long min2 = Math.min(x2, y2);
+
+            long tempMin = Math.min(min1, min2);
+            if (tempMin == 1) {
+                out.println(temp);
+            } else {
+                out.println(temp - 1);
+            }
             return;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        out.println(temp);
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,38 +1,17 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
-        int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
-            }
-        }
+        int a = in.nextInt();
+        int b = in.nextInt();
+        int c = in.nextInt();
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
+        if (a + b == c) {
+            System.out.println("+");
         } else {
-            System.out.println("No");
+            System.out.println("-");
         }
     }
 

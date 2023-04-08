@@ -1,38 +1,35 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+class Difference_Matrix {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        long oddLimit = 0;
+        long evenLimit = 0;
+        if (n % 2 == 0) {
+            oddLimit = (n * n) - 1;
+            evenLimit = (n * n);
+        } else {
+            oddLimit = (n * n);
+            evenLimit = (n * n) - 1;
+        }
+
+        long index = 0;
+        for (long i = 1; i <= oddLimit; i += 2) {
+            out.print(i + " ");
+            index++;
+            if (index % n == 0) {
+                out.println();
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
+        for (long i = 2; i <= evenLimit; i += 2) {
+            out.print(i + " ");
+            index++;
+            if (index % n == 0) {
+                out.println();
+            }
         }
     }
 

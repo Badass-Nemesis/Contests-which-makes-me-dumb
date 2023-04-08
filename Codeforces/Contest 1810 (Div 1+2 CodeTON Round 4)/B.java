@@ -5,35 +5,30 @@ public class B {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
-            }
-        }
-
-        if (foundIndex == -1) {
-            System.out.println("Yes");
+        if (n % 2 == 0) {
+            out.println(-1);
             return;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
+        ArrayList<Integer> arr = new ArrayList<>();
+        while (n > 1) {
+            long temp = n / 2;
+            if (temp % 2 == 0) {
+                arr.add(1);
+            } else {
+                arr.add(2);
+            }
+            if (temp == 0) {
+                n++;
+            }
+            n = n / 2;
         }
 
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
+        out.println(arr.size());
+        for (int i = arr.size() - 1; i >= 0; i--) {
+            out.print(arr.get(i) + " ");
         }
+        out.println();
     }
 
     public static void main(String[] args) throws IOException {

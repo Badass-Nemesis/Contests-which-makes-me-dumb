@@ -4,7 +4,36 @@ import java.util.*;
 public class A {
 
     public static void solve() throws IOException {
-        
+        int n = in.nextInt();
+        int[] arr = new int[n];
+        int gcd = 0;
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextInt();
+
+            if (i == 0) {
+                gcd = arr[i];
+            } else {
+                gcd = gcd(gcd, arr[i]);
+            }
+        }
+
+        if (gcd > n) {
+            System.out.println("No");
+            return;
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int temp = gcd(arr[i], arr[j]);
+                if (temp == 2 || temp == 1) {
+                    System.out.println("Yes");
+                    return;
+                }
+            }
+        }
+
+        System.out.println("No");
+
     }
 
     public static void main(String[] args) throws IOException {

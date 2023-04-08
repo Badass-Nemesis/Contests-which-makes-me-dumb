@@ -1,38 +1,32 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
-        int n = in.nextInt();
         String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        HashMap<Character, Integer> hm = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (hm.containsKey(s.charAt(i)) == true) {
+                hm.put(s.charAt(i), hm.get(s.charAt(i)) + 1);
+            } else {
+                hm.put(s.charAt(i), 1);
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
+        boolean three = false;
+        for (Character ch : hm.keySet()) {
+            if (hm.get(ch) == 3) {
+                three = true;
+            }
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
+        if (hm.size() == 1) {
+            System.out.println(-1);
+        } else if (hm.size() == 4 || (hm.size() == 4 / 2 && three == false) || hm.size() == 3) {
+            System.out.println(4);
         } else {
-            System.out.println("No");
+            System.out.println(6);
         }
     }
 

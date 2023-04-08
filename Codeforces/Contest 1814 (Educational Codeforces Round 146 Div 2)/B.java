@@ -4,35 +4,32 @@ import java.util.*;
 public class B {
 
     public static void solve() throws IOException {
-        int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
-            }
-        }
+        long a = in.nextLong();
+        long b = in.nextLong();
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
+        if (a == 1 && b == 1) {
+            out.println(2);
+            return;
+        } else if (a == 1) {
+            if (b % 2 == 0) {
+                out.println(2 + b / 2);
+            } else {
+                out.println(3 + b / 2);
+            }
+            return;
+        } else if (b == 1) {
+            if (a % 2 == 0) {
+                out.println(2 + a / 2);
+            } else {
+                out.println(3 + a / 2);
+            }
             return;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
+        if(gcd(a, b) == 1){
+            
         } else {
-            System.out.println("No");
+
         }
     }
 
@@ -66,7 +63,7 @@ public class B {
     // }
     // }
 
-    static int gcd(int a, int b) {
+    static int gcd(long a, long b) {
         // old snippet code
         /*
          * if (a == 0 || b == 0)

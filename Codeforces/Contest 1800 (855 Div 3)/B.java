@@ -5,35 +5,40 @@ public class B {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
+        int k = in.nextInt();
         String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
+        int[] upperCase = new int[26];
+        int[] lowerCase = new int[26];
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (ch >= 'A' && ch <= 'Z') {
+                upperCase[ch - 'A']++;
+            } else {
+                lowerCase[ch - 'a']++;
+            }
+        }
+
+        long count = 0;
+        for (int i = 0; i < 26; i++) {
+            if (Math.abs(upperCase[i] - lowerCase[i]) == 0) {
+                count += upperCase[i];
+            } else {
+                if (k > 0 && Math.abs(upperCase[i] - lowerCase[i]) >= 2) {
+                    if (k >= Math.abs(upperCase[i] - lowerCase[i]) / 2) {
+                        k -= Math.abs(upperCase[i] - lowerCase[i]) / 2;
+                        count += Math.abs(upperCase[i] + lowerCase[i]) / 2;
+                    } else {
+                        count += Math.min(upperCase[i], lowerCase[i]);
+                        count += k;
+                        k = 0;
+                    }
+                } else if (upperCase[i] > 0 && lowerCase[i] > 0) {
+                    count += Math.min(upperCase[i], lowerCase[i]);
                 }
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        System.out.println(count);
     }
 
     public static void main(String[] args) throws IOException {

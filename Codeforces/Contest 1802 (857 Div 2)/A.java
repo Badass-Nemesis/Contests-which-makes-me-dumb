@@ -1,39 +1,61 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
+        int[] arr = new int[n];
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextInt();
+            set.add(arr[i]);
+        }
+
+        Arrays.sort(arr);
+        int count = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (arr[i] > 0) {
+                count++;
+                System.out.print(count + " ");
+            } else if (i == n - 1 && arr[i] < 0) {
+                while (i >= 0 && arr[i] < 0) {
+                    System.out.print(0 + " ");
+                    i--;
                 }
+            } else {
+                count--;
+                System.out.print(count + " ");
+            }
+        }
+        System.out.println();
+
+        ArrayList<Integer> reverse = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (arr[i] < 0 && set.contains(Math.abs(arr[i])) == true) {
+                reverse.add(1);
+                reverse.add(0);
+                set.remove(arr[i]);
+                set.remove(Math.abs(arr[i]));
+            } else if (arr[i] > 0 && set.contains(-1 * arr[i]) == true) {
+                reverse.add(1);
+                reverse.add(0);
+                set.remove(arr[i]);
+                set.remove(-1 * arr[i]);
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
+        count = 1;
+        int size = set.size();
+        while (size-- > 0) {
+            reverse.add(count);
+            count++;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
+        for (Integer val : reverse) {
+            System.out.print(val + " ");
         }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        System.out.println();
     }
 
     public static void main(String[] args) throws IOException {

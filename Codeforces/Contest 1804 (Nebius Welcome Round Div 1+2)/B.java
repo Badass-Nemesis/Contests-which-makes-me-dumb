@@ -5,35 +5,35 @@ public class B {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        int k = in.nextInt(); // doses
+        int d = in.nextInt(); // vaccine lifetime
+        int w = in.nextInt(); // max waiting time
+
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextInt();
+        }
+
+        int index = 0;
+        int count = 0;
+        while (index < n) {
+            int time = arr[index] + w;
+            int tempIndex = index;
+            int size = 0;
+            while (index < n && arr[index] - arr[tempIndex] - d <= w && time - arr[tempIndex] <= 2 * d && size < k) {
+                // System.out.println("index " + index); // debug
+                index++;
+                size++;
             }
+
+            count++;
+            if (size == 0) {
+                index++;
+            }
+            // System.out.println("count = " + count); // debug
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        System.out.println(count);
     }
 
     public static void main(String[] args) throws IOException {

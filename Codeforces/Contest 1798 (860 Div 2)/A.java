@@ -1,35 +1,43 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
-            }
+        int[] a = new int[n];
+        int[] b = new int[n];
+        int maxA = 0;
+        int maxB = 0;
+        for (int i = 0; i < n; i++) {
+            a[i] = in.nextInt();
+            maxA = Math.max(maxA, a[i]);
+        }
+        for (int i = 0; i < n; i++) {
+            b[i] = in.nextInt();
+            maxB = Math.max(maxB, b[i]);
         }
 
-        if (foundIndex == -1) {
+        if (a[n - 1] == maxA && b[n - 1] == maxB) {
             System.out.println("Yes");
             return;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
+        for (int i = 1; i <= n; i++) {
+            if (a[i - 1] > b[i - 1]) {
+                int temp = b[i - 1];
+                b[i - 1] = a[i - 1];
+                a[i - 1] = temp;
+            }
         }
 
-        if (countInversions == 0) {
+        maxA = a[n - 1];
+        maxB = b[n - 1];
+
+        Arrays.sort(a);
+        Arrays.sort(b);
+
+        if (a[n - 1] == maxA && b[n - 1] == maxB) {
             System.out.println("Yes");
         } else {
             System.out.println("No");

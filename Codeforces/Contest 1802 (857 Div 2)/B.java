@@ -5,35 +5,61 @@ public class B {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        int[] arr = new int[n];
+        int countOne = 0;
+        int countTwo = 0;
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextInt();
+            if (arr[i] == 1) {
+                countOne++;
+            }
+            if (arr[i] == 2) {
+                countTwo++;
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
+        if (countTwo == 0) {
+            System.out.println(n);
             return;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
+        if (countOne == 0) {
+            System.out.println(0);
+            return;
         }
 
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
+        long count = 0;
+        long countOnes = 0;
+        boolean first = true;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 1) {
+                countOnes++;
+            } else if (arr[i] == 2 && countOnes == 1) {
+                if (first == true) {
+                    count++;
+                    first = false;
+                } else {
+                    countOnes++;
+                }
+            } else if (arr[i] == 2 && countOnes > 1) {
+                long temp = count;
+                count += (countOnes / 2);
+                if (countOnes % 2 != 0) {
+                    count++;
+                }
+
+                if (temp % 2 != 0) {
+                    count--;
+                }
+                countOnes = 0;
+            }
         }
+
+        // if (arr[n - 1] == 2) {
+        // count++;
+        // }
+
+        System.out.println(count + countOnes);
     }
 
     public static void main(String[] args) throws IOException {

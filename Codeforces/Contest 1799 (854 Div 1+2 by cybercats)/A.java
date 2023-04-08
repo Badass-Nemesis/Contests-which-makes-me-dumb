@@ -1,39 +1,42 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        int m = in.nextInt();
+        int[] arr = new int[m];
+        for (int i = 0; i < m; i++) {
+            arr[i] = in.nextInt();
+        }
+        Set<Integer> set = new HashSet<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < m; i++) {
+            if (set.size() == n) {
+                break;
+            }
+
+            if (set.contains(arr[i]) == false) {
+                count++;
+                set.add(arr[i]);
+                ans.add(count);
+                // System.out.println(ans);
+            } else {
+                count++;
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
+        // System.out.println(ans.size() + " size"); // debug
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
+        for (int i = 0; i < (n - ans.size()); i++) {
+            System.out.print(-1 + " ");
         }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
+        for (int i = ans.size() - 1; i >= 0; i--) {
+            System.out.print(ans.get(i) + " ");
         }
+        System.out.println();
     }
 
     public static void main(String[] args) throws IOException {

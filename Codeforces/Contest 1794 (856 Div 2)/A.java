@@ -1,39 +1,40 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
+    public static boolean isPlaindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        while (left <= right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        String temp1 = "";
+        String temp2 = "";
+        for (int i = 0; i < 2 * n - 2; i++) {
+            String temp = in.next();
+            if (temp1.equals("") && temp.length() == n - 1) {
+                temp1 = temp;
+            } else if (temp2.equals("") && temp.length() == n - 1) {
+                temp2 = temp;
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
+        if (isPlaindrome(temp1 + temp2) == true || isPlaindrome(temp2 + temp1) == true) {
+            System.out.println("YES");
             return;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        System.out.println("NO");
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,38 +1,36 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class D {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        int q = in.nextInt();
+
+        long k = 0;
+        long temp = 0;
+        long[] arr = new long[n + 1];
+        arr[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            arr[i] = in.nextLong();
+        }
+        for (int i = 0; i <= n; i++) {
+            temp += arr[i];
+            arr[i] = temp;
+        }
+        for (int i = 0; i < q; i++) {
+            long l = in.nextLong();
+            long r = in.nextLong();
+            long tempk = in.nextLong();
+
+            long tempS = (Math.abs(l - r) + 1) * tempk;
+            long tempD = arr[(int) r] - arr[(int) l - 1];
+            tempD = tempS + temp - tempD;
+            if (tempD % 2 == 0) {
+                System.out.println("NO");
+            } else {
+                System.out.println("YES");
             }
-        }
-
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
         }
     }
 

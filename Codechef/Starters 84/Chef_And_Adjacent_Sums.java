@@ -1,39 +1,41 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+class Chef_And_Adjacent_Sums {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = in.nextInt();
+        }
+
+        Arrays.sort(arr);
+        long z = arr[n - 1] + arr[n - 2];
+        int[] tempArr = new int[n];
+        boolean switching = false;
+        int left = 0;
+        int right = n - 1;
+        for (int i = 0; i < n; i++) {
+            if (switching == false) {
+                tempArr[i] = arr[right];
+                right--;
+                switching = true;
+            } else {
+                tempArr[i] = arr[left];
+                left++;
+                switching = false;
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
+        for (int i = 0; i < n - 1; i++) {
+            if ((long) (tempArr[i] + tempArr[i + 1]) >= z) {
+                out.println("NO");
+                return;
+            }
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        out.println("YES");
     }
 
     public static void main(String[] args) throws IOException {

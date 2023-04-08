@@ -1,39 +1,44 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class C {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        int k = in.nextInt();
+
+        k = n * (n + 1) / 2 - k;
+        // out.println(k); // debug
+
+        int[] arr = new int[n];
+        int i = 0;
+        int count = 0;
+        while (i < n && k > 0) {
+            count++;
+            if (k - count < 0) {
+                break;
+            } else {
+                k -= count;
+                arr[i] = -2;
+                i++;
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
+        // System.out.println(count);
+        if (k > 0) {
+            arr[i] = 2 * (count - k) - 1;
+            i++;
         }
 
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
+        while (i < n) {
+            arr[i] = 1000;
+            i++;
         }
 
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
+        for (int index = 0; index < n; index++) {
+            out.print(arr[index] + " ");
         }
+        out.println();
     }
 
     public static void main(String[] args) throws IOException {

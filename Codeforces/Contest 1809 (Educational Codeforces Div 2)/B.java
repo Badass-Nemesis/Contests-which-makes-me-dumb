@@ -2,38 +2,53 @@ import java.io.*;
 import java.util.*;
 
 public class B {
+    public static class Pair {
+        int x;
+        int y;
+        int r;
+
+        Pair(int x, int y, int r) {
+            this.x = x;
+            this.y = y;
+            this.r = r;
+        }
+    }
 
     public static void solve() throws IOException {
+        // Long n = in.nextLong();
+        // out.println((long) Math.sqrt(n - 1));
+
+        int x = in.nextInt();
+        int y = in.nextInt();
         int n = in.nextInt();
-        String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
+
+        Pair[] arr = new Pair[n];
+        for (int i = 0; i < n; i++) {
+            int tempX = in.nextInt();
+            int tempY = in.nextInt();
+            int tempR = in.nextInt();
+            arr[i] = new Pair(tempX, tempY, tempR);
+        }
+
+        for (int i = 0; i < n; i++) {
+            Pair cirA = arr[i];
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    Pair cirB = arr[j];
+                    int minLeft = Math.min(cirA.x - cirA.r, cirB.x - cirB.r);
+                    int maxRight = Math.max(cirA.x + cirA.r, cirB.x + cirB.r);
+                    int maxUp = Math.max(cirA.y + cirA.r, cirB.y + cirB.r);
+                    int minDown = Math.min(cirA.y - cirA.r, cirB.y - cirB.r);
+
+                    if ((minLeft <= 0 && maxRight >= x) || (maxUp >= y && minDown <= 0)) {
+                        System.out.println("NO");
+                        return;
+                    }
                 }
             }
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
+        System.out.println("YES");
     }
 
     public static void main(String[] args) throws IOException {

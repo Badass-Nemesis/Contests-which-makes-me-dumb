@@ -1,38 +1,42 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
         int n = in.nextInt();
         String s = in.next();
-        StringBuilder tempS = new StringBuilder(s);
-        int foundIndex = -1;
-        int countInversions = 0;
-        for (int i = 0; i < (n / 2); i++) {
-            if (tempS.charAt(i) != tempS.charAt(n - i - 1)) {
-                tempS.setCharAt(i, '2');
-                countInversions++;
-                if (foundIndex == -1) {
-                    foundIndex = i;
-                }
+        int index = 0;
+        int count = 0;
+        while (index < n && (s.charAt(index) == 'M' || s.charAt(index) == 'm')) {
+            if (count == 0) {
+                count++;
             }
+            index++;
+        }
+        while (index < n && (s.charAt(index) == 'E' || s.charAt(index) == 'e')) {
+            if (count == 1) {
+                count++;
+            }
+            index++;
+        }
+        while (index < n && (s.charAt(index) == 'O' || s.charAt(index) == 'o')) {
+            if (count == 2) {
+                count++;
+            }
+            index++;
+        }
+        while (index < n && (s.charAt(index) == 'W' || s.charAt(index) == 'w')) {
+            if (count == 3) {
+                count++;
+            }
+            index++;
         }
 
-        if (foundIndex == -1) {
-            System.out.println("Yes");
-            return;
-        }
-
-        while (foundIndex < n && tempS.charAt(foundIndex) == '2') {
-            countInversions--;
-            foundIndex++;
-        }
-
-        if (countInversions == 0) {
-            System.out.println("Yes");
+        if (count == 4 && index == n) {
+            System.out.println("YES");
         } else {
-            System.out.println("No");
+            System.out.println("NO");
         }
     }
 
