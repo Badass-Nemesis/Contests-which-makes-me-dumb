@@ -1,36 +1,33 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
-        long a = in.nextLong();
-        long b = in.nextLong();
+        long n = in.nextLong();
+        long m = in.nextLong();
 
-        if (a == 1 && b == 1) {
+        long x1 = in.nextLong();
+        long y1 = in.nextLong();
+
+        long x2 = in.nextLong();
+        long y2 = in.nextLong();
+
+        if (x1 != 1 && x1 != n && y1 != 1 && y1 != m && x2 != 1 && x2 != n && y2 != 1
+                && y2 != m) {
+            out.println(4);
+            return;
+        }
+
+        if ((y1 == 1 || y1 == m) && (x1 == 1 || x1 == n)) {
             out.println(2);
             return;
-        } else if (a == 1) {
-            if (b % 2 == 0) {
-                out.println(2 + b / 2);
-            } else {
-                out.println(3 + b / 2);
-            }
-            return;
-        } else if (b == 1) {
-            if (a % 2 == 0) {
-                out.println(2 + a / 2);
-            } else {
-                out.println(3 + a / 2);
-            }
+        } else if ((y2 == 1 || y2 == m) && (x2 == 1 || x2 == n)) {
+            out.println(2);
             return;
         }
 
-        if(gcd(a, b) == 1){
-            
-        } else {
-
-        }
+        out.println(3);
     }
 
     public static void main(String[] args) throws IOException {
@@ -63,7 +60,7 @@ public class B {
     // }
     // }
 
-    static long gcd(long a, long b) {
+    static int gcd(int a, int b) {
         // old snippet code
         /*
          * if (a == 0 || b == 0)

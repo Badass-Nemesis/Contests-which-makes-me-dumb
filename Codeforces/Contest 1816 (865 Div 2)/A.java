@@ -1,36 +1,21 @@
 import java.io.*;
 import java.util.*;
 
-public class B {
+public class A {
 
     public static void solve() throws IOException {
         long a = in.nextLong();
         long b = in.nextLong();
 
-        if (a == 1 && b == 1) {
-            out.println(2);
-            return;
-        } else if (a == 1) {
-            if (b % 2 == 0) {
-                out.println(2 + b / 2);
-            } else {
-                out.println(3 + b / 2);
-            }
-            return;
-        } else if (b == 1) {
-            if (a % 2 == 0) {
-                out.println(2 + a / 2);
-            } else {
-                out.println(3 + a / 2);
-            }
-            return;
-        }
-
-        if(gcd(a, b) == 1){
-            
+        if (a == 1 || b == 1) {
+            out.println(1);
+            out.println(a + " " + b);
         } else {
-
+            out.println(2);
+            out.println((a - 1) + " " + 1);
+            out.println(a + " " + b);
         }
+
     }
 
     public static void main(String[] args) throws IOException {
@@ -63,7 +48,7 @@ public class B {
     // }
     // }
 
-    static long gcd(long a, long b) {
+    static int gcd(int a, int b) {
         // old snippet code
         /*
          * if (a == 0 || b == 0)

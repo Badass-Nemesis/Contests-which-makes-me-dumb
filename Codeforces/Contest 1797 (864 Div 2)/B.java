@@ -3,33 +3,65 @@ import java.util.*;
 
 public class B {
 
-    public static void solve() throws IOException {
-        long a = in.nextLong();
-        long b = in.nextLong();
+    public static long k = 0;
 
-        if (a == 1 && b == 1) {
-            out.println(2);
-            return;
-        } else if (a == 1) {
-            if (b % 2 == 0) {
-                out.println(2 + b / 2);
-            } else {
-                out.println(3 + b / 2);
-            }
-            return;
-        } else if (b == 1) {
-            if (a % 2 == 0) {
-                out.println(2 + a / 2);
-            } else {
-                out.println(3 + a / 2);
-            }
-            return;
+    public static void diagonalOrder(int[][] arr, int n, int m) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>(n + m - 1);
+        for (int i = 0; i < n + m - 1; i++) {
+            ans.add(new ArrayList<Integer>());
         }
 
-        if(gcd(a, b) == 1){
-            
-        } else {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                (ans.get(i + j)).add(arr[i][j]);
+            }
+        }
 
+        int limit = n + m - 2;
+        for (int i = 0; i <= ans.size() / 2; i++) {
+            for (int j = ans.get(i).size() - 1; j >= 0; j--) {
+                // System.out.print(ans.get(i).get(j) + " ");
+                if (ans.get(i).get(j) != ans.get(limit - i).get(j)) {
+                    k--;
+                }
+            }
+            // limit--;
+            // System.out.println();
+        }
+    }
+
+    public static void solve() throws IOException {
+        int n = in.nextInt();
+        k = in.nextLong();
+
+        int[][] arr = new int[n][n];
+        // int[][] revArr = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = in.nextInt();
+                // revArr[i][j] = arr[i][j];
+            }
+        }
+
+        diagonalOrder(arr, n, n);
+        // for (int i = 0; i < n; i++) {
+        // for (int j = 0; j < n; j++) {
+        // out.print(arr[i][j] + " ");
+        // }
+        // out.println();
+        // }
+        // out.println();
+        // for (int i = 0; i < n; i++) {
+        // for (int j = 0; j < n; j++) {
+        // out.print(revArr[i][j] + " ");
+        // }
+        // out.println();
+        // }
+
+        if (k == 0) {
+            out.println("YES");
+        } else {
+            out.println("NO");
         }
     }
 
@@ -63,7 +95,7 @@ public class B {
     // }
     // }
 
-    static long gcd(long a, long b) {
+    static int gcd(int a, int b) {
         // old snippet code
         /*
          * if (a == 0 || b == 0)

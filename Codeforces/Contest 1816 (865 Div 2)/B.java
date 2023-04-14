@@ -4,33 +4,43 @@ import java.util.*;
 public class B {
 
     public static void solve() throws IOException {
-        long a = in.nextLong();
-        long b = in.nextLong();
+        int n = in.nextInt();
 
-        if (a == 1 && b == 1) {
-            out.println(2);
-            return;
-        } else if (a == 1) {
-            if (b % 2 == 0) {
-                out.println(2 + b / 2);
-            } else {
-                out.println(3 + b / 2);
-            }
-            return;
-        } else if (b == 1) {
-            if (a % 2 == 0) {
-                out.println(2 + a / 2);
-            } else {
-                out.println(3 + a / 2);
-            }
+        if (n == 2) {
+            out.println(4 + " " + 2);
+            out.println(1 + " " + 3);
             return;
         }
 
-        if(gcd(a, b) == 1){
-            
-        } else {
-
+        ArrayList<Integer> even = new ArrayList<>();
+        for (int i = 2; i <= 2 * n; i += 2) {
+            even.add(i);
         }
+
+        ArrayList<Integer> odd = new ArrayList<>();
+        for (int i = 1; i < 2 * n; i += 2) {
+            odd.add(i);
+        }
+
+        int left = 0;
+        int right = even.size() - 1;
+        while (left < right) {
+            out.print(even.get(right) + " " + even.get(left) + " ");
+            right--;
+            left++;
+        }
+
+        out.println();
+
+        left = 0;
+        right = odd.size() / 2;
+        while (right < odd.size()) {
+            out.print(odd.get(left) + " " + odd.get(right) + " ");
+            right++;
+            left++;
+        }
+
+        out.println();
     }
 
     public static void main(String[] args) throws IOException {
@@ -63,7 +73,7 @@ public class B {
     // }
     // }
 
-    static long gcd(long a, long b) {
+    static int gcd(int a, int b) {
         // old snippet code
         /*
          * if (a == 0 || b == 0)
